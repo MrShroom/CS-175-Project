@@ -1,3 +1,3 @@
 # CS-175-Project
-https://onedrive.live.com/redir?page=view&resid=99CE2BA467B21DE5!89024&authkey=!AMXtPMlfU8cGTL4
-Evie conect to onedrive doc.
+Yelp raw data is stored on my one drive account at:
+http://1drv.ms/1Q2Sy3U
