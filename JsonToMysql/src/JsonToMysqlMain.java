@@ -43,7 +43,7 @@ public class JsonToMysqlMain
 	public static void main(String[] args) 
 	{
 		dBConnects = setMySQLDB();//create DB connection 
-		parseBusinesses();//parse and load Business data into DB
+		//parseBusinesses();//parse and load Business data into DB
 		parseReviews();//parse and load Review data into DB
 		try {
 			dBConnects.close();//clean up
@@ -64,7 +64,7 @@ public class JsonToMysqlMain
 				//load line into JSON parser
 				JsonParser businessParser = Json.createParser(new StringReader(reader.nextLine()));
 				//create new business object
-				bussinessObject currentBussiness = new bussinessObject();
+				BusinessObject currentBussiness = new BusinessObject();
 				//move passed START_OBJECT
 				businessParser.next();
 				//set event to first real event
@@ -118,7 +118,7 @@ public class JsonToMysqlMain
 		}
 	}
 	
-	private static void loadBusinessIntoDB(bussinessObject currentBussiness) 
+	private static void loadBusinessIntoDB(BusinessObject currentBussiness) 
 	{
 
 		String statement = "INSERT INTO businesses (business_id, name, stars, review_count)" +
@@ -149,7 +149,7 @@ public class JsonToMysqlMain
 		
 	}
 
-	private static void set_atrib(String fieldName, bussinessObject currentBussiness, JsonParser data)
+	private static void set_atrib(String fieldName, BusinessObject currentBussiness, JsonParser data)
 	{		
 		switch (fieldName)
 		{
@@ -240,7 +240,7 @@ public class JsonToMysqlMain
 	{
 
 		
-		String statement = "INSERT INTO businesses (review_id, review_type, business_id, stars, review_text)" +
+		String statement = "INSERT INTO reviews (review_id, review_type, business_id, stars, review_text)" +
 							" VALUES ( ?, ?, ?, ?, ? );";
 		try
 		{
@@ -249,7 +249,7 @@ public class JsonToMysqlMain
 			preparedStatement.setString(2, currentReview.getReview_type());
 			preparedStatement.setString(3, currentReview.getBusiness_id());
 			preparedStatement.setString(4, currentReview.getStars().toString());
-			preparedStatement.setString(4, currentReview.getReview_text());
+			preparedStatement.setString(5, currentReview.getReview_text());
 			preparedStatement.executeUpdate();
 
 			
