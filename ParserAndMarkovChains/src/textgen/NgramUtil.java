@@ -22,8 +22,6 @@ public class NgramUtil {
 	}
 	
 	
-	
-	
 	//Create ngram of pos-tags from TaggedWord array
 	public static String toNgramTags(List<TaggedWord> words,int n, int pos){
 		String ngram = words.get(pos-n+1).tag();
