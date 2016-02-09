@@ -2,28 +2,36 @@ package textgen;
 
 import java.util.HashMap;
 
-public class MarkovChain {
-	public HashMap<String,BagOfObjects<String>> map = new HashMap<String,BagOfObjects<String>>();
+//Wrapper for hashmap of current words to probability of next words using bagofobjects class.
+public class MarkovChain<T> {
+	public HashMap<T,BagOfObjects<T>> map = new HashMap<T,BagOfObjects<T>>();
 	
 	public MarkovChain(){
 		
 	}
 	
-	public void Add(String current, String next){
+	//Show markov chain an example of what comes next after a particular state.
+	public void Add(T current, T next){
 		if(map.containsKey(current)){
 			map.get(current).Add(next);
 		}else{
-			map.put(current, new BagOfObjects<String>(next));
+			map.put(current, new BagOfObjects<T>(next));
 		}
 	}
 	
-	public String getNext(String current){
+	//Randomly generate a new word based on current word.
+	@SuppressWarnings("unchecked")
+	public T getNext(T current){
 		if(map.containsKey(current))
 			return map.get(current).GetRandom();
-		return "<ERROR: NoData>";
+		if(current instanceof String)
+			return (T)"<Error: NoNextState>";
+		return null;
 	}
 	
-	public boolean HasNext(String current){
+	//Check if markov chain contains any examples of current ngram.
+	//May be false if using a high-n ngram chain.
+	public boolean HasNext(T current){
 		return map.containsKey(current);
 	}
 	
