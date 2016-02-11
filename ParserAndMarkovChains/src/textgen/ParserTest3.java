@@ -31,16 +31,18 @@ public class ParserTest3 {
 		categories.add("Restaurants");
 		Set<Integer> stars = new HashSet<Integer>();
 		stars.add(1);
-		Set<String> listOfReview = BagOfWordUtilites.getSetOfReviews(categories, stars, 0);
+		Set<String> listOfReview = BagOfWordUtilites.getSetOfReviews(categories, stars, 2000);
 		
 		for(String review : listOfReview)
 		{
-			
 			List<TaggedWord> words = new ArrayList<TaggedWord> ();
 			words = ParserUtil.getFlatTaggedWordListString(review);
 			System.out.println("----->"+ words.get(0));	
-			for(int i = 1; i <= 5; ++i){
+			for(int i = 1; i <= 3;++i){
 				NgramUtil.teachMarkovWordGramMap(wordChains.get(i-1), words, i);
+			}
+			for(int i = 1; i <= 5; ++i){
+				
 				NgramUtil.teachPosMarkovNgram(posChains.get(i-1), words, i);
 			}
 		}

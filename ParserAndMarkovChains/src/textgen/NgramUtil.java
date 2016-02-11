@@ -49,6 +49,22 @@ public class NgramUtil {
 	}
 	
 	
+	public static MarkovChain<String> genStringMarkovNgram(List<String> list, int n){
+		MarkovChain<String> chain = new MarkovChain<String>();
+		for(int i = n-1; i < list.size()-1;++i){
+			String ngram = toNgram(list,n,i);
+			chain.Add(ngram, list.get(i+1));
+		}
+		return chain;
+	}
+	
+	public static void teachStringMarkovNgram(MarkovChain<String> chain, List<String> list, int n){
+		for(int i = n-1; i < list.size()-1;++i){
+			String ngram = toNgram(list,n,i);
+			chain.Add(ngram, list.get(i+1));
+		}	
+	}
+	
 	//Create a markov chain from scratch using list of taggedwords. N is the size of the n-gram that chain uses.
 	public static MarkovChain<String> genPosMarkovNgram(List<TaggedWord> list, int n){
 		MarkovChain<String> chain = new MarkovChain<String>();
