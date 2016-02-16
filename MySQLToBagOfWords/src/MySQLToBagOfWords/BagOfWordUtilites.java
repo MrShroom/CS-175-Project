@@ -22,7 +22,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 /**
- * This class is used 
+ * This class is used Access the MySQl Database and retrieve reviews. 
+ * 
  * @author Shaun McThomas
  *
  */
@@ -80,7 +81,7 @@ public class BagOfWordUtilites
 	 *  
 	 * @param maxNumberOfReviewToUse	The max number of review to use in bag of words(0 for no limit)
 	 * 
-	 * @return							A Map representation of a Bag of words (word->Frequency of word)
+	 * @return							A Map representation of a Bag of words (word-:Frequency of word)
 	 */
 	public static Map<String, Integer> getBagOfWords(Set<String> categories, Set<Integer> stars, Integer maxNumberOfReviewToUse)
 	{
@@ -115,7 +116,7 @@ public class BagOfWordUtilites
 	 *  
 	 * @param maxNumberOfReviewToUse	The max number of review to use in bag of words(0 for no limit)
 	 * 
-	 * @return							A Map representation of a Bag of words (word->percentage word appeared in collection)  
+	 * @return							A Map representation of a Bag of words (word-:percentage word appeared in collection)  
 	 */
 	public static Map<String, Double> getBagOfWordsNormilaized(Set<String> categories, Set<Integer> stars, Integer maxNumberOfReviewToUse)
 	{
@@ -154,10 +155,93 @@ public class BagOfWordUtilites
 	 */
 	public static Set<String> getSetOfReviews(Set<String> categories, Set<Integer> stars, Integer maxNumberOfReviewToUse)
 	{
+		return getSetOfReviews(categories, stars, 0, maxNumberOfReviewToUse);
+	}
+	
+	/**
+	 * This function will query the database to return a collection of reviews based on the given input 
+	 * parameters.
+	 * 
+	 * <p>Note: Selecting all 2.2 million reviews by leaving categories and stars empty, and start and stop to 
+	 * 			0 is not a good idea and will take long time to process.</p>
+	 * 
+	 * @param categories				A set of categories(strings) which all reviews will share. Note call {@link #getSetOfCatagories(int) getSetOfCatagories} to get list
+	 * 									of available categories. Pass in either null or empty set to select all categories
+	 * 
+	 * @param stars						A set of star ratings(integers) which all reviews will have been rated.For example pass in {1,2} to 
+	 * 									get only review that have been rated with 1 or 2 stars.
+	 *  
+	 * @param start                 	The start index of chunk of reviews(0 for no limit)
+	 * 
+	 * @param end                 	    The end index of the chunk of reviews(0 for no limit)
+	 * 
+	 * @return							A set of reviews  
+	 */
+	public static Set<String> getSetOfReviews(Set<String> categories, Set<Integer> stars, Integer start,Integer end )
+	{
 		dBConnects = setMySQLDB();
 		Statement st = null;
 	    ResultSet rs = null;
 		String statement = "SELECT review_text" +
+						   " FROM reviews";
+		boolean whereAdded = false;
+		if(!(stars == null || stars.isEmpty()))
+		{
+			statement += " WHERE ";
+			whereAdded = true;			
+			for(Integer str : stars)
+				statement += " reviews.stars=" + str + " AND ";
+			statement = statement.substring(0,statement.lastIndexOf(" AND "));
+		}
+		
+		if(!(categories == null || categories.isEmpty()))
+		{
+			if (!whereAdded)
+				statement += " WHERE ";
+			else 
+				statement += " AND ";
+			whereAdded = true;	
+			for(String cat : categories)
+			{
+				statement += " business_id IN (SELECT business_id FROM is_in_catagory WHERE ";
+				statement += " is_in_catagory.category=\'" + cat + "\' AND ";
+			}
+			statement = statement .substring(0,statement.lastIndexOf(" AND "));
+			for(int i = categories.size();i>0 ; i--)
+				statement += " )";
+		}
+		
+		if(end >= start && end > 0)
+			statement += " LIMIT " + start +"," + end;
+		statement += " ;";
+						   
+		Set<String> output = new HashSet<String>();
+		try
+		{			
+			st = dBConnects.createStatement();
+			rs = st.executeQuery(statement);
+			int count =0;
+			while (rs.next()) 
+			{
+				output.add(rs.getString(1));	
+				count++;
+			}
+			
+			dBConnects.close();
+			return output;
+		} catch (SQLException e) 
+		{
+			e.printStackTrace();			
+		}
+		return null;
+	}
+	
+	public static int countSetOfReviews(Set<String> categories, Set<Integer> stars )
+	{
+		dBConnects = setMySQLDB();
+		Statement st = null;
+	    ResultSet rs = null;
+		String statement = "SELECT count(*)" +
 						   " FROM reviews";
 		boolean whereAdded = false;
 		if(!(stars == null || stars.isEmpty()))
@@ -175,27 +259,28 @@ public class BagOfWordUtilites
 				statement += " WHERE ";
 			else 
 				statement += " AND ";
-			statement += " business_id IN (SELECT business_id FROM is_in_catagory WHERE ";
 			whereAdded = true;	
 			for(String cat : categories)
+			{
+				statement += " business_id IN (SELECT business_id FROM is_in_catagory WHERE ";
 				statement += " is_in_catagory.category=\'" + cat + "\' AND ";
+			}
 			statement = statement .substring(0,statement.lastIndexOf(" AND "));
-			statement += " )";
+			for(int i = categories.size();i>0 ; i--)
+				statement += " )";
 		}
 		
-		if(maxNumberOfReviewToUse > 0)
-			statement += " LIMIT " + maxNumberOfReviewToUse;
 		statement += " ;";
 						   
-		Set<String> output = new HashSet<String>();
+		int output = 0;
 		try
 		{			
 			st = dBConnects.createStatement();
 			rs = st.executeQuery(statement);
 			
-			while (rs.next()) 
+			if(rs.next()) 
 			{
-				output.add(rs.getString(1));	
+				output = rs.getInt(1);	
 			}
 			dBConnects.close();
 			return output;
@@ -203,7 +288,7 @@ public class BagOfWordUtilites
 		{
 			e.printStackTrace();			
 		}
-		return null;
+		return 0;
 	}
 	
 	/**
