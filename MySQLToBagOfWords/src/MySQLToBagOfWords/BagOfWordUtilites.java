@@ -220,13 +220,10 @@ public class BagOfWordUtilites
 		{			
 			st = dBConnects.createStatement();
 			rs = st.executeQuery(statement);
-			int count =0;
 			while (rs.next()) 
 			{
 				output.add(rs.getString(1));	
-				count++;
 			}
-			
 			dBConnects.close();
 			return output;
 		} catch (SQLException e) 
