@@ -1,15 +1,16 @@
 package textgen;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 import MySQLToBagOfWords.BagOfWordUtilites;
-import edu.stanford.nlp.ling.TaggedWord;
 
 public class ParserTest4 {
-	public static final int NSIZE = 3;
+	public static final int NSIZE = 2;
 	
 	public static void main(String[] args){
 		
@@ -36,6 +37,24 @@ public class ParserTest4 {
 			for(int i = 1; i <= NSIZE; ++i)
 				NgramUtil.teachStringMarkovNgram(markov, tokens, i);
 		}
+		listOfReview = null;
+		
+		try{
+			List<String> tokens = new ArrayList<String>();
+			Scanner sc = new Scanner(new File("res/hemingway"));
+			while(sc.hasNextLine()){
+				for(String token : sc.nextLine().toLowerCase().split("[^a-zA-Z0-9\\.,;\\?!']")){
+					if(token.length()>0)
+						tokens.add(token);
+				}	
+			}
+			sc.close();
+			for(int i = 0; i <= NSIZE; ++i)
+				NgramUtil.teachStringMarkovNgram(markov, tokens, i);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
 		
 		List<String> words = new ArrayList<String>();
 		words.add(startBOW.GetRandom());

@@ -1,6 +1,7 @@
 package textgen;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import edu.stanford.nlp.ling.TaggedWord;
@@ -65,6 +66,22 @@ public class NgramUtil {
 		}	
 	}
 	
+	public static MarkovChain<String> genMarkovWordsFromTW(List<TaggedWord> list, int n){
+		MarkovChain<String> chain = new MarkovChain<String>();
+		for(int i = n-1; i < list.size()-1;++i){
+			String ngram = toNgramWords(list,n,i);
+			chain.Add(ngram, list.get(i+1).tag());
+		}
+		return chain;
+	}
+	
+	public static void teachMarkovWordsFromTW(MarkovChain<String> chain, List<TaggedWord> list, int n){
+		for(int i = n-1; i < list.size()-1;++i){
+			String ngram = toNgramWords(list,n,i);
+			chain.Add(ngram, list.get(i+1).tag());
+		}
+	}
+	
 	//Create a markov chain from scratch using list of taggedwords. N is the size of the n-gram that chain uses.
 	public static MarkovChain<String> genPosMarkovNgram(List<TaggedWord> list, int n){
 		MarkovChain<String> chain = new MarkovChain<String>();
@@ -106,6 +123,31 @@ public class NgramUtil {
 			augmap.get(next.tag()).Add(ngram, next.word());
 		}
 	}
+	
+	/**
+	 * Generate a document frequency bow from corpus.
+	 * Tokenizes based on given regex.
+	 * 
+	 * @param reviews corpus
+	 * @param tokSplit regex call to split.
+	 * @return bag of words of corpus
+	 */
+	public static BagOfObjects<String> dfBOWfromSplit(Iterable<String> reviews, String tokSplit){
+		BagOfObjects<String> bow = new BagOfObjects<String>();
+		
+		
+		for(String review : reviews){
+			HashSet<String> seen = new HashSet<String>();
+			for(String s : review.toLowerCase().split(tokSplit))
+				if(s.length() > 0 && !seen.contains(s)){
+					bow.Add(s);
+					seen.add(s);
+				}
+		}
+			
+		return bow;
+	}
+	
 	
 	
 }
