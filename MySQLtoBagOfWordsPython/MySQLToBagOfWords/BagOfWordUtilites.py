@@ -1,5 +1,6 @@
 import mysql.connector
 import mysql.connector
+import nltk
 
 config = {
   'user': 'user2',
@@ -11,36 +12,51 @@ config = {
 
 
 def getBagOfWords(categories, stars, maxNumberOfReviewToUse):
-    pass
+    reviews = getSetOfReviews(categories, stars, maxNumberOfReviewToUse)
+    output = {} #string:int
+    for currentReview in reviews:
+        for token in nltk.tokenize(currentReview):
+            if token in output.keys():
+                output[token]+=1
+            else:
+                output[token] = 1
+    return output
 
 def getBagOfWordsNormilaized(categories, stars, maxNumberOfReviewToUse):
-    pass
+    bow = getBagOfWords(categories, stars, maxNumberOfReviewToUse)
+    totalNumberOfWords = 0
+    for i in range(len(bow.keys())):
+        totalNumberOfWords+=1
+    for word in bow:
+        bow[word] = bow[word]/totalNumberOfWords
+    return bow
 
 def getSetOfReviews(categories, stars, maxNumberOfReviewToUse):
     statement = "SELECT review_text FROM reviews "
     whereAdded = False
-    if( stars):
-        statement += statement + " WHERE "
+    if(stars):
+        statement += " WHERE "
         whereAdded = True
         for strs in stars:
-            statement = statement + " reviews.stars=" + strs + " AND "
-        statement = statement.substring(0,statement.lastIndexOf(" AND "))
-    if(categories ):
+            statement = statement + " reviews.stars=" + str(strs) + " AND "
+        statement = statement[0:statement.rfind(" AND ")]
+    if(categories):
         if (not whereAdded):
-            statement = statement + " WHERE "
+            statement += " WHERE "
         else:
-			statement = statement + " AND "
-        statement = statement + " business_id IN (SELECT business_id FROM is_in_catagory WHERE "
+            statement += " AND "
+        statement += " business_id IN (SELECT business_id FROM is_in_catagory WHERE "
         whereAdded = True
         for cat in categories:
-            statement = statement + " is_in_catagory.category=\'" + cat + "\' AND "
-        statement = statement.substring(0,statement.lastIndexOf(" AND "))
-        statement = statement + " )"
-	if(maxNumberOfReviewToUse > 0):
-            statement = statement + " LIMIT " + maxNumberOfReviewToUse
-	statement = statement + " ;"
+            statement = statement + " is_in_catagory.category=\"" + str(cat) + "\" AND "
+        statement = statement[0:statement.rfind(" AND ")]
+        statement += " )"
+    if(maxNumberOfReviewToUse > 0):
+            statement = statement + " LIMIT " + str(maxNumberOfReviewToUse)
+    statement += " ;"
     cnx = mysql.connector.connect(**config)
     cursor = cnx.cursor()
+    print(statement)
     cursor.execute(statement)
     output = set()
     for (review_text) in cursor:
@@ -49,10 +65,10 @@ def getSetOfReviews(categories, stars, maxNumberOfReviewToUse):
     return output
 
 def getSetOfCatagories(numberOfCategories):
-    statement = "SELECT category, count(business_id) AS cnt  FROM is_in_catagory Group BY category ORDER BY cnt DESC"
+    statement = "SELECT category, count(business_id) AS cnt FROM is_in_catagory Group BY category ORDER BY cnt DESC"
     if (numberOfCategories > 0):
-        statement = statement + " LIMIT " + str ( numberOfCategories)
-    statement = statement + ";"
+        statement = statement + " LIMIT " + str (numberOfCategories)
+    statement += ";"
     cnx = mysql.connector.connect(**config)
     cursor = cnx.cursor()
     cursor.execute(statement)
@@ -65,5 +81,6 @@ def getSetOfCatagories(numberOfCategories):
 
 
 if __name__ == "__main__":
-    print (getSetOfCatagories(1))
-    # print(getSetOfReviews(getSetOfCatagories(2), {1}, 2))
+    #print (getSetOfCatagories(1))
+    #print(getSetOfReviews(getSetOfCatagories(2), {1}, 2))
+    print(getBagOfWords(getSetOfCatagories(3), {1,2,3,4,5}, 5))
