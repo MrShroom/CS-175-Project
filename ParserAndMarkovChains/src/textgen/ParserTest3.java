@@ -62,7 +62,7 @@ public class ParserTest3 {
 				String ngram = NgramUtil.toNgram(poslist, j+1);
 				if(posChains.get(j).HasNext(ngram)){
 					System.out.println("PosGram Size: " + (j+1));
-					poslist.add(posChains.get(j).getNext(ngram));
+					poslist.add(posChains.get(j).GetNext(ngram));
 					break;
 				}
 			}
@@ -89,7 +89,7 @@ public class ParserTest3 {
 				//to the desired part of speech.
 				if(wordChains.get(j).get(nextPOS).HasNext(ngram)){
 					System.out.println("WordGram Size: "+(j+1));
-					wlist.add(wordChains.get(j).get(nextPOS).getNext(ngram));
+					wlist.add(wordChains.get(j).get(nextPOS).GetNext(ngram));
 					break;
 				}
 			}

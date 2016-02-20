@@ -135,7 +135,6 @@ public class NgramUtil {
 	public static BagOfObjects<String> dfBOWfromSplit(Iterable<String> reviews, String tokSplit){
 		BagOfObjects<String> bow = new BagOfObjects<String>();
 		
-		
 		for(String review : reviews){
 			HashSet<String> seen = new HashSet<String>();
 			for(String s : review.toLowerCase().split(tokSplit))
@@ -148,6 +147,10 @@ public class NgramUtil {
 		return bow;
 	}
 	
+	public static void teachTokenCountBOW(BagOfObjects<String> bow, List<String> list, int n){
+		for(int i = n-1; i < list.size(); ++i)
+			bow.Add(toNgram(list,n,i));
+	}
 	
 	
 }

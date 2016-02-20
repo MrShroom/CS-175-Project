@@ -86,7 +86,7 @@ public class ParserTest5 {
 				String ngram = NgramUtil.toNgram(words, j);
 				if(posChain.get(pos).HasNext(ngram)){
 					flag = true;
-					words.add(posChain.get(pos).getNext(ngram));
+					words.add(posChain.get(pos).GetNext(ngram));
 					break;
 				}
 			}

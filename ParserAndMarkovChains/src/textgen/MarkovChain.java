@@ -21,7 +21,7 @@ public class MarkovChain<T> {
 	
 	//Randomly generate a new word based on current word.
 	@SuppressWarnings("unchecked")
-	public T getNext(T current){
+	public T GetNext(T current){
 		if(map.containsKey(current))
 			return map.get(current).GetRandom();
 		if(current instanceof String)
