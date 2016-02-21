@@ -82,7 +82,6 @@ public class ParserUtil {
 	public static List<TaggedWord> getFlatTaggedWordListString(String str) {
 		return getFlatTaggedWordListReader(new StringReader(str));
 	}
-
 	
 	public static List<String> getSentenceStructStrings(Reader reader){
 		if(tagger == null)
@@ -117,5 +116,37 @@ public class ParserUtil {
 	public static List<String> sentenceToList(String sentence){
 		return Arrays.asList(sentence.split("\\s+"));
 	}
+	
+	//Converts a reader to a list of TaggedWords. is called by all other tagger methods.
+		public static List<List<TaggedWord>> getTaggedWordListReader(Reader reader){
+			if(tagger == null)
+				InitTagger();
+			List<List<HasWord>> sentences = MaxentTagger.tokenizeText(reader);
+			List<List<TaggedWord>> list = new ArrayList<List<TaggedWord>>();
+			for (List<HasWord> sentence : sentences) {
+				List<TaggedWord> tSentence = tagger.tagSentence(sentence);
+				list.add(tSentence);
+			}
+			return list;
+		}
+		
+		//Converts a text file into a list of TaggedWords, which are token/partofspeechtag pairs.
+		public static List<List<TaggedWord>> getTaggedWordListPath(String path) {
+			
+			try {
+				List<List<TaggedWord>> list = getTaggedWordListReader(new BufferedReader(new FileReader(path)));
+				return list;
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			return new ArrayList<List<TaggedWord>>();
+
+		}
+		
+		//Generate taggedword list from plain string.
+		public static List<List<TaggedWord>> getTaggedWordListString(String str) {
+			return getTaggedWordListReader(new StringReader(str));
+		}
 	
 }

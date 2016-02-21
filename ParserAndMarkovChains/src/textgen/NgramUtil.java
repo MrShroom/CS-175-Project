@@ -153,4 +153,17 @@ public class NgramUtil {
 	}
 	
 	
+	public static void teachTokenCountBOW_words(BagOfObjects<String> bow, List<TaggedWord> list, int n){
+		for(int i = n-1; i < list.size(); ++i)
+			bow.Add(toNgramWords(list,n,i));
+	}
+	
+	public static void teachMarkovWordsTaggedW(MarkovChain<String> chain,List<TaggedWord> list,int n){
+		for(int i = n-1; i < list.size()-1; ++i){
+			String ngram = toNgramWords(list,n,i);
+			chain.Add(ngram, list.get(i+1).word());
+		}
+	}
+	
+	
 }
