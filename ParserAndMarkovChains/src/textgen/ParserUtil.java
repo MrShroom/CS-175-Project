@@ -100,8 +100,25 @@ public class ParserUtil {
 		return list;
 	}
 	
+	
 	public static List<String> getSentenceStructStrings(String str){
 		return getSentenceStructStrings(new StringReader(str));
+	}
+	
+	public static List<List<TaggedWord>> getSentenceStructList(Reader reader){
+		if(tagger == null)
+			InitTagger();
+		List<List<HasWord>> sentences = MaxentTagger.tokenizeText(reader);
+		List<List<TaggedWord>> list = new ArrayList<List<TaggedWord>>();
+		for (List<HasWord> sentence : sentences) {
+			List<TaggedWord> tSentence = tagger.tagSentence(sentence);
+			list.add(tSentence);
+		}
+		return list;
+	}
+	
+	public static List<List<TaggedWord>> getSentenceStructList(String str){
+		return getSentenceStructList(new StringReader(str));
 	}
 	
 	public static List<String> getSentenceStructStringsPath(String path){
