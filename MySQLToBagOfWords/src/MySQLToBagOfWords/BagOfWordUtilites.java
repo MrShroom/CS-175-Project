@@ -171,9 +171,9 @@ public class BagOfWordUtilites
 	 * @param stars						A set of star ratings(integers) which all reviews will have been rated.For example pass in {1,2} to 
 	 * 									get only review that have been rated with 1 or 2 stars.
 	 *  
-	 * @param start                 	The start index of chunk of reviews(0 for no limit)
+	 * @param start                 	The start index of chunk of reviews(0 for all)
 	 * 
-	 * @param numberOfreviewa          The number of reviews (0 for no limit)
+	 * @param numberOfReviews          The number of reviews (0 for no limit)
 	 * 
 	 * @return							A set of reviews  
 	 */
@@ -211,7 +211,7 @@ public class BagOfWordUtilites
 				statement += " )";
 		}
 		
-		if(numberOfReviews >= start && numberOfReviews > 0)
+		if( numberOfReviews > 0)
 			statement += " LIMIT " + start +"," + numberOfReviews;
 		statement += " ;";
 						   
