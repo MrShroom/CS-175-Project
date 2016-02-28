@@ -18,7 +18,9 @@ public class ParserTest9 {
 	//public static HashMap<String,MarkovChainKT<List<Integer>,Integer>> augmap = new HashMap<String,MarkovChainKT<List<Integer>,Integer>>();
 	public static MarkovChainPOS<List<Integer>,Integer,Integer> chain = new MarkovChainPOS<List<Integer>,Integer,Integer>();
 	public static BagOfObjects_NoComp<List<Integer>> sentenceStructs = new BagOfObjects_NoComp<List<Integer>>();
-	public static final int NSIZE = 4;
+	public static final int NSIZE = 2;
+	
+	public static HashMap<Integer,BagOfObjects<Integer>> startWords = new HashMap<Integer,BagOfObjects<Integer>>();
 	
 	
 	public static void main(String[] args){
@@ -26,13 +28,21 @@ public class ParserTest9 {
 		categories.add("Restaurants");
 		Set<Integer> stars = new HashSet<Integer>();
 		stars.add(1);
-		Set<String> listOfReview = BagOfWordUtilites.getSetOfReviews(categories, stars, 1000,2000);
+		Set<String> listOfReview = BagOfWordUtilites.getSetOfReviews(categories, stars, 1000);
 		
 		
 		for(String review : listOfReview)
 		{
 			List<List<TaggedWord>> sentences = ParserUtil.getSentenceStructList(review);
-			for(List<TaggedWord> sentence: sentences){
+			for(List<TaggedWord> sentence : sentences){
+				if(sentence.isEmpty())
+					continue;
+				
+				int startpos = Wordtab.atoi(sentence.get(0).tag());
+				if(!startWords.containsKey(startpos))
+					startWords.put(startpos,new BagOfObjects<Integer>());
+				startWords.get(startpos).Add(Wordtab.atoi(sentence.get(0).word()));
+	
 				List<Integer> list = new ArrayList<Integer>();
 				for(TaggedWord tw : sentence)
 					list.add(Wordtab.atoi(tw.tag()));
@@ -49,7 +59,7 @@ public class ParserTest9 {
 		
 		
 		List<String> words = new ArrayList<String>();
-		for(int i = 0; i < 4; ++i){
+		for(int i = 0; i < 6; ++i){
 			words.addAll(generateSentence());
 		}
 		
@@ -68,7 +78,7 @@ public class ParserTest9 {
 		List<Integer> posTags;
 		do{
 			posTags = sentenceStructs.GetRandom();
-		}while(posTags.size()<6 || posTags.size() > 10);
+		}while(posTags.size()<6 || posTags.size() > 16);
 		
 		List<Integer> best = new ArrayList<Integer>();
 		int highscore = 0;
@@ -96,6 +106,12 @@ public class ParserTest9 {
 	//Pair<id,score>
 	public static Pair<Integer,Integer> calculateNextWord3(List<Integer> words, int posTarg){
 		Pair<Integer,Integer> pair = new Pair<Integer,Integer>(1,1);
+		
+		if(words.isEmpty()){
+			pair.setFirst(startWords.get(posTarg).GetRandom());
+			return pair;
+		}
+		
 		for(int i = Math.min(words.size(),NSIZE);i>0;--i){
 			List<Integer> ngram = MemorySafeUtil.toNgram(words, i);
 			if(chain.HasNext(posTarg,ngram)){

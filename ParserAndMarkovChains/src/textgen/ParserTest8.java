@@ -17,7 +17,8 @@ public class ParserTest8 {
 	public static HashMap<String,BagOfObjects<Integer>> vocab = new HashMap<String,BagOfObjects<Integer>>();
 	public static HashMap<String,MarkovChainKT<List<Integer>,Integer>> augmap = new HashMap<String,MarkovChainKT<List<Integer>,Integer>>();
 	public static BagOfObjects<String> sentenceStructs = new BagOfObjects<String>();
-	public static final int NSIZE = 4;
+	public static HashMap<String,BagOfObjects<Integer>> startWords = new HashMap<String,BagOfObjects<Integer>>();
+	public static final int NSIZE = 3;
 	
 	
 	public static void main(String[] args){
@@ -45,7 +46,7 @@ public class ParserTest8 {
 		
 		
 		List<String> words = new ArrayList<String>();
-		for(int i = 0; i < 4; ++i){
+		for(int i = 0; i < 5; ++i){
 			words.addAll(generateSentence());
 		}
 		
@@ -64,7 +65,7 @@ public class ParserTest8 {
 		List<String> posTags;
 		do{
 			posTags = ParserUtil.sentenceToList(sentenceStructs.GetRandom());
-		}while(posTags.size()<6 || posTags.size() > 10);
+		}while(posTags.size()<6 || posTags.size() > 15);
 		
 		List<Integer> best = new ArrayList<Integer>();
 		int highscore = 0;
