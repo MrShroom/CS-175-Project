@@ -18,7 +18,7 @@ public class ParserTest9 {
 	//public static HashMap<String,MarkovChainKT<List<Integer>,Integer>> augmap = new HashMap<String,MarkovChainKT<List<Integer>,Integer>>();
 	public static MarkovChainPOS<List<Integer>,Integer,Integer> chain = new MarkovChainPOS<List<Integer>,Integer,Integer>();
 	public static BagOfObjects_NoComp<List<Integer>> sentenceStructs = new BagOfObjects_NoComp<List<Integer>>();
-	public static final int NSIZE = 2;
+	public static final int NSIZE = 3;
 	
 	public static HashMap<Integer,BagOfObjects<Integer>> startWords = new HashMap<Integer,BagOfObjects<Integer>>();
 	
@@ -27,10 +27,12 @@ public class ParserTest9 {
 		Set<String> categories = new HashSet<String>();
 		categories.add("Restaurants");
 		Set<Integer> stars = new HashSet<Integer>();
-		stars.add(1);
-		Set<String> listOfReview = BagOfWordUtilites.getSetOfReviews(categories, stars, 1000);
+		stars.add(5);
+		Set<String> listOfReview = BagOfWordUtilites.getSetOfReviews(categories, stars, 1000, 400);
 		
+		System.out.println("Size: " + listOfReview.size());
 		
+			
 		for(String review : listOfReview)
 		{
 			List<List<TaggedWord>> sentences = ParserUtil.getSentenceStructList(review);
@@ -57,6 +59,37 @@ public class ParserTest9 {
 			}
 		}
 		
+		List<String> paths = new ArrayList<String>();
+		//paths.add("res/hemingway");
+		for(String path : paths)
+		{
+			List<List<TaggedWord>> sentences = ParserUtil.getSentenceStructListPath(path);
+			for(List<TaggedWord> sentence : sentences){
+				if(sentence.isEmpty())
+					continue;
+				
+				int startpos = Wordtab.atoi(sentence.get(0).tag());
+				if(!startWords.containsKey(startpos))
+					startWords.put(startpos,new BagOfObjects<Integer>());
+				startWords.get(startpos).Add(Wordtab.atoi(sentence.get(0).word()));
+	
+				List<Integer> list = new ArrayList<Integer>();
+				for(TaggedWord tw : sentence)
+					list.add(Wordtab.atoi(tw.tag()));
+				sentenceStructs.Add(list);
+			}
+			List<TaggedWord> twod = ParserUtil.getFlatTaggedWordListPath(path);
+			
+			
+			MemorySafeUtil.trainVocabInt(vocab, twod);
+			for(int i = 1; i <= NSIZE; ++i){
+				MemorySafeUtil.trainPosMarkovChains2(chain, twod, i);
+			}
+		}
+		
+		
+		
+		
 		
 		List<String> words = new ArrayList<String>();
 		for(int i = 0; i < 6; ++i){
@@ -67,7 +100,18 @@ public class ParserTest9 {
 		for(int i = 1; i < words.size(); ++i){
 			//char c = words.get(i).charAt(0);
 			//if(".?,/".star)
-			if(!Pattern.compile("[\\.\\?,!']").matcher(words.get(i)).find())
+			if(words.get(i).contains("`")||words.get(i).contains("\"")||words.get(i).contains("\'\'"))
+				continue;
+			if(words.get(i).equals("-LRB-")){
+				System.out.print(" (");
+				continue;
+			}
+			if(words.get(i).equals("-RRB-")){
+				System.out.print(")");
+				continue;
+			}
+			
+			if(!Pattern.compile("[\\.\\?,!':]").matcher(words.get(i)).find()&&!words.get(i-1).equals("$"))
 				System.out.print(" ");
 			System.out.print(words.get(i));
 		}
@@ -117,7 +161,8 @@ public class ParserTest9 {
 			if(chain.HasNext(posTarg,ngram)){
 				//System.out.println(i + "-gram");
 				pair.setFirst(chain.GetNext(posTarg,ngram));
-				pair.setSecond((int)Math.pow(i+1,3));
+				//pair.setSecond((int)Math.pow(i+1,3));
+				pair.setSecond((i+1)*3);
 				return pair;
 			}
 		}

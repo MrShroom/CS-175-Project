@@ -1,6 +1,7 @@
 package textgen;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Reader;
@@ -119,6 +120,15 @@ public class ParserUtil {
 	
 	public static List<List<TaggedWord>> getSentenceStructList(String str){
 		return getSentenceStructList(new StringReader(str));
+	}
+	
+	public static List<List<TaggedWord>> getSentenceStructListPath(String path){
+		try{
+			return getSentenceStructList(new BufferedReader(new FileReader(path)));
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public static List<String> getSentenceStructStringsPath(String path){
