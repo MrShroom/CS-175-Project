@@ -12,12 +12,14 @@ public class Tester {
 		categories.add("Tex-Mex");
 		Set<Integer> stars = new HashSet<Integer>();
 		stars.add(1);
-		Integer maxNumberOfReviewToUse = 0;
+		Integer maxNumberOfReviewToUse = 2;
 		
-		System.out.println(BagOfWordUtilites.countSetOfReviews(categories, stars));
+		//System.out.println(BagOfWordUtilites.countSetOfReviews(categories, stars));
 		Set<String> temp = BagOfWordUtilites.getSetOfReviews(categories, stars, maxNumberOfReviewToUse);
 		System.out.println(temp.size());
-		temp = BagOfWordUtilites.getSetOfReviews(categories, stars, 2 , 2+maxNumberOfReviewToUse);
+		temp = BagOfWordUtilites.getSetOfReviews(categories, stars, 2 , maxNumberOfReviewToUse);
+		System.out.println(temp);
+		temp = BagOfWordUtilites.getSetOfReviews(categories, stars, 4 , maxNumberOfReviewToUse);
 		System.out.println(temp);
 		Map<String, Integer> temp2 = BagOfWordUtilites.getBagOfWords(categories, stars, maxNumberOfReviewToUse);
 		System.out.println(temp2.size());

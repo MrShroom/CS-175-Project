@@ -173,11 +173,11 @@ public class BagOfWordUtilites
 	 *  
 	 * @param start                 	The start index of chunk of reviews(0 for no limit)
 	 * 
-	 * @param end                 	    The end index of the chunk of reviews(0 for no limit)
+	 * @param numberOfreviewa          The number of reviews (0 for no limit)
 	 * 
 	 * @return							A set of reviews  
 	 */
-	public static Set<String> getSetOfReviews(Set<String> categories, Set<Integer> stars, Integer start,Integer end )
+	public static Set<String> getSetOfReviews(Set<String> categories, Set<Integer> stars, Integer start,Integer numberOfReviews )
 	{
 		dBConnects = setMySQLDB();
 		Statement st = null;
@@ -211,8 +211,8 @@ public class BagOfWordUtilites
 				statement += " )";
 		}
 		
-		if(end >= start && end > 0)
-			statement += " LIMIT " + start +"," + end;
+		if(numberOfReviews >= start && numberOfReviews > 0)
+			statement += " LIMIT " + start +"," + numberOfReviews;
 		statement += " ;";
 						   
 		Set<String> output = new HashSet<String>();
