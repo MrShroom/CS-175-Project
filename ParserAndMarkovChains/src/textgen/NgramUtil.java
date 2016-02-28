@@ -165,5 +165,12 @@ public class NgramUtil {
 		}
 	}
 	
-	
+	public static void teachHashBowVocab(HashMap<String,BagOfObjects<String>> vocab,List<TaggedWord> list){
+		for(TaggedWord tw : list){
+			if(!vocab.containsKey(tw.tag()))
+				vocab.put(tw.tag(), new BagOfObjects<String>());
+			vocab.get(tw.tag()).Add(tw.word());
+		}
+	}
+
 }

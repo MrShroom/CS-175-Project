@@ -29,7 +29,7 @@ public class ParserTest4 {
 		tokenCountBOW = new BagOfObjects<String>();
 		
 		Set<String> categories = new HashSet<String>();
-		categories.add("Restaurants");
+		categories.add("Burgers");
 		Set<Integer> stars = new HashSet<Integer>();
 		stars.add(1);
 		Set<String> listOfReview = BagOfWordUtilites.getSetOfReviews(categories, stars, 1000);
