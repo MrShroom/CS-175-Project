@@ -13,6 +13,7 @@ import edu.stanford.nlp.util.Pair;
 
 public class ParserTest9 {
 	
+	public static boolean ngramBoost = false; 
 	
 	public static HashMap<Integer,BagOfObjects<Integer>> vocab = new HashMap<Integer,BagOfObjects<Integer>>();
 	//public static HashMap<String,MarkovChainKT<List<Integer>,Integer>> augmap = new HashMap<String,MarkovChainKT<List<Integer>,Integer>>();
@@ -28,13 +29,19 @@ public class ParserTest9 {
 		categories.add("Restaurants");
 		Set<Integer> stars = new HashSet<Integer>();
 		stars.add(5);
-		Set<String> listOfReview = BagOfWordUtilites.getSetOfReviews(categories, stars, 1000, 400);
+		Set<String> listOfReview = BagOfWordUtilites.getSetOfReviews(categories, stars, 10000);
 		
 		System.out.println("Size: " + listOfReview.size());
 		
-			
+		System.out.println("Training");
+		int ctr = 0;
+		int num = 0;
 		for(String review : listOfReview)
 		{
+			if((++ctr)%(listOfReview.size()/100)==0){
+				System.out.println(++num+"% ");
+				System.out.println("MB Used: " + Runtime.getRuntime().totalMemory()/1000000);
+			}
 			List<List<TaggedWord>> sentences = ParserUtil.getSentenceStructList(review);
 			for(List<TaggedWord> sentence : sentences){
 				if(sentence.isEmpty())
@@ -85,35 +92,42 @@ public class ParserTest9 {
 			for(int i = 1; i <= NSIZE; ++i){
 				MemorySafeUtil.trainPosMarkovChains2(chain, twod, i);
 			}
+		
 		}
 		
 		
 		
 		
-		
-		List<String> words = new ArrayList<String>();
-		for(int i = 0; i < 6; ++i){
-			words.addAll(generateSentence());
-		}
-		
-		System.out.print(words.get(0));
-		for(int i = 1; i < words.size(); ++i){
-			//char c = words.get(i).charAt(0);
-			//if(".?,/".star)
-			if(words.get(i).contains("`")||words.get(i).contains("\"")||words.get(i).contains("\'\'"))
-				continue;
-			if(words.get(i).equals("-LRB-")){
-				System.out.print(" (");
-				continue;
-			}
-			if(words.get(i).equals("-RRB-")){
-				System.out.print(")");
-				continue;
+		for(int j = 0; j < 6; ++j){
+			List<String> words = new ArrayList<String>();
+			for(int i = 0; i < 6; ++i){
+				words.addAll(generateSentence());
 			}
 			
-			if(!Pattern.compile("[\\.\\?,!':]").matcher(words.get(i)).find()&&!words.get(i-1).equals("$"))
-				System.out.print(" ");
-			System.out.print(words.get(i));
+			System.out.println();
+			
+			System.out.print(words.get(0));
+			for(int i = 1; i < words.size(); ++i){
+				//char c = words.get(i).charAt(0);
+				//if(".?,/".star)
+				if(words.get(i).contains("`")||words.get(i).contains("\"")||words.get(i).contains("\'\'"))
+					continue;
+				if(words.get(i).equals("-LRB-")){
+					System.out.print(" (");
+					continue;
+				}
+				if(words.get(i).equals("-RRB-")){
+					System.out.print(")");
+					continue;
+				}
+				
+				if(!Pattern.compile("[\\.\\?,!':;]").matcher(words.get(i)).find()&&!words.get(i-1).equals("$"))
+					System.out.print(" ");
+				System.out.print(words.get(i));
+			}
+			
+			System.out.println();
+			System.out.println();
 		}
 	}
 	
@@ -156,7 +170,9 @@ public class ParserTest9 {
 			return pair;
 		}
 		
-		for(int i = Math.min(words.size(),NSIZE);i>0;--i){
+		
+		ngramBoost = !ngramBoost;
+		for(int i = Math.min(words.size(),NSIZE-(ngramBoost?1:0));i>0;--i){
 			List<Integer> ngram = MemorySafeUtil.toNgram(words, i);
 			if(chain.HasNext(posTarg,ngram)){
 				//System.out.println(i + "-gram");

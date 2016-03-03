@@ -37,12 +37,18 @@ public class ParserTest7 {
 		categories.add("Restaurants");
 		Set<Integer> stars = new HashSet<Integer>();
 		stars.add(1);
-		Set<String> listOfReview = BagOfWordUtilites.getSetOfReviews(categories, stars, 1000);
+		Set<String> listOfReview = BagOfWordUtilites.getSetOfReviews(categories, stars, 10000);
 		
 		
-		
+		int ctr = 0;
+		int num = 0;
 		for(String review : listOfReview)
 		{
+			if((++ctr)%(listOfReview.size()/100)==0){
+				System.out.println(++num+"% ");
+				System.out.println("MB Used: " + Runtime.getRuntime().totalMemory()/1000000);
+			}
+			
 			List<String> sentences = ParserUtil.getSentenceStructStrings(review);
 			for(String str : sentences)
 				//if(str.length() > 30)
