@@ -14,6 +14,7 @@ import edu.stanford.nlp.util.Pair;
 public class Generator {
 
 	boolean verbose = true;
+	boolean trained = false;
 	
 	String category = "Restaurants";
 	int star = 5;
@@ -104,10 +105,14 @@ public class Generator {
 			}
 		}
 
+		trained = true;
 		return this;
 	}
 	
 	public String generateReview(){
+		if(!trained)
+			return "Error: Generator is not trained.";
+		
 		StringBuilder builder = new StringBuilder();
 		
 		List<String> words = new ArrayList<String>();

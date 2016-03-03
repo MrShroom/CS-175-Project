@@ -1,11 +1,14 @@
 package textgen;
 
-import javax.swing.GroupLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
@@ -15,7 +18,7 @@ public class GeneratorGUI extends JFrame {
 	JButton trainButton;
 	JButton generateButton;
 	
-	JTextField reviewBox;
+	JTextArea reviewBox;
 	//JFormattedTextField sampleSizeField;
 	JSpinner starSpinner;
 	
@@ -28,37 +31,62 @@ public class GeneratorGUI extends JFrame {
 	
 	public GeneratorGUI(){
 		super("Review Generator");
-		panel = new JPanel();
+		//this.setSize(400,400);
+		panel = new JPanel(new GridBagLayout());
 		//panel.setSize(400,400);
-		GroupLayout gl = new GroupLayout(panel);
-		panel.setLayout(gl);
-		gl.setAutoCreateGaps(true);
-		gl.setAutoCreateContainerGaps(true);
+		GridBagConstraints c = new GridBagConstraints();
+		
+		c.fill = GridBagConstraints.HORIZONTAL;
+	
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth=4;
+		//c.ipady = 300;
+		reviewBox = new JTextArea("Wow dude that's crazy");
+		reviewBox.setLineWrap(true);
+		reviewBox.setSize(300,300);
+		//reviewBox.set
+		panel.add(reviewBox,c);
+		
+		c.ipady = 0;
+		c.gridwidth = 1;
+		c.gridx = 0;
+		c.gridy = 1;
+		trainButton = new JButton("Train");
+		trainButton.addActionListener(e->{
+			reviewBox.setText("Training");
+			generator.verbose = true;
+			generator.train();
+			reviewBox.setText("Training Complete");
+		});
+		panel.add(trainButton,c);
+		
+		c.gridx = 1;
+		c.gridy = 1;
+		generateButton = new JButton("Generate");
+		generateButton.addActionListener(e->{
+			reviewBox.setText(generator.generateReview());
+		});
+		panel.add(generateButton,c);
+		
+		c.gridx = 2;
+		c.gridy = 1;
+		JLabel starlabel = new JLabel("Stars:");
+		panel.add(starlabel,c);
+		
+		
+		c.gridx = 3;
+		c.gridy = 1;
+		SpinnerNumberModel starModel = new SpinnerNumberModel(5,1,5,1);
+		starSpinner = new JSpinner(starModel);
+		starSpinner.addChangeListener(e->{
+			generator.setStar((int)starSpinner.getValue());
+		});
+		starlabel.setLabelFor(starSpinner);
+		panel.add(starSpinner,c);
 		
 		
 		this.add(panel);
-		
-		trainButton = new JButton("Train");
-		//panel.add(trainButton);
-		
-		generateButton = new JButton("Generate");
-		//panel.add(generateButton);
-		
-		JLabel starlabel = new JLabel("Stars:");
-		//panel.add(starlabel);
-		
-		SpinnerNumberModel starModel = new SpinnerNumberModel(5,1,5,1);
-		starSpinner = new JSpinner(starModel);
-		starlabel.setLabelFor(starSpinner);
-		//panel.add(starSpinner);
-		
-		//gl.setHorizontalGroup(gl.createSequentialGroup().addComponent(trainButton).addComponent(generateButton).addGroup(group));
-		
-		
-		
-		
-		//SpringUtilities.makeCompactGrid(panel,4,4);
-		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();
 		this.setVisible(true);

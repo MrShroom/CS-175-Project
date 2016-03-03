@@ -28,7 +28,7 @@ public class ParserTest9 {
 		Set<String> categories = new HashSet<String>();
 		categories.add("Restaurants");
 		Set<Integer> stars = new HashSet<Integer>();
-		stars.add(5);
+		stars.add(1);
 		Set<String> listOfReview = BagOfWordUtilites.getSetOfReviews(categories, stars, 10000);
 		
 		System.out.println("Size: " + listOfReview.size());
