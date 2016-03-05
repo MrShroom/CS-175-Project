@@ -60,6 +60,17 @@ public class MemorySafeUtil {
 		}
 	}
 	
+	public static void trainNoPosChain(MarkovChainKT<List<Integer>,Integer> chain, List<TaggedWord> words, int n){
+		for(int i = n-1; i < words.size()-1;++i){
+			chain.Add(toNgramTwod(words, n, i),Wordtab.atoi(words.get(i+1).word()));
+		}
+	}
+	
+	public static void trainNoPosVocab(BagOfObjects<Integer> bow, List<TaggedWord> words){
+		for(TaggedWord tw : words)
+			bow.Add(Wordtab.atoi(tw.word()));
+	}
+	
 	//MarkovChain<Integer>
 
 }

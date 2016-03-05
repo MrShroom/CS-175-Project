@@ -9,11 +9,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 public class GeneratorGUI extends JFrame {
-	public Generator generator = new Generator();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 473650642759632976L;
+
+	public Generator generator = new GeneratorPOS();
 	
 	JButton trainButton;
 	JButton generateButton;
@@ -66,6 +70,7 @@ public class GeneratorGUI extends JFrame {
 		generateButton = new JButton("Generate");
 		generateButton.addActionListener(e->{
 			reviewBox.setText(generator.generateReview());
+			System.out.println(reviewBox.getText());
 		});
 		panel.add(generateButton,c);
 		
