@@ -72,7 +72,7 @@ public class ParserTest4 {
 		
 		List<String> words = new ArrayList<String>();
 		words.add(startBOW.GetRandom());
-		boolean flag = false;
+//		boolean flag = false;
 		
 		
 //		for(int i = 0; i < 600; ++i){
