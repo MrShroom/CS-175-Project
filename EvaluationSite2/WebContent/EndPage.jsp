@@ -5,7 +5,7 @@
 <h1 align="center">Evaluation Pages</h1>
 <fieldset>
 <legend>Welcome</legend>
-<p>Thank you for taking the time to help evaluate our reviews. If you'd like to submit more responses please fell free.
+<p>Thank you for taking the time to help evaluate our reviews. If you'd like to submit more responses please feel free.
 </fieldset>
 
 <FORM ACTION="QuestionPage" METHOD="post">

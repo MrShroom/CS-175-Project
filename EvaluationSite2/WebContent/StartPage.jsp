@@ -5,9 +5,9 @@
 <h1 align="center">Evaluation Pages</h1>
 <fieldset>
 <legend>Welcome</legend>
-<p>Thank you for taking the time to help evaluate our reviews. In the next pages, you will be show a series 
+<p>Thank you for taking the time to help evaluate our reviews. In the next pages, you will be shown a series 
 of reviews. There are two on each page. Some of these reviews are real reviews taken from Yelp's data set,
- some of these have been computer  generated. On each page please select the review that is or seems more likely <b>Human generated</b>.
+ some of these have been computer generated. On each page please select the review that is or seems more likely to have been <b>Human generated</b>. Please click start to began.</p>
 </fieldset>
 
 <FORM ACTION="QuestionPage" METHOD="post">

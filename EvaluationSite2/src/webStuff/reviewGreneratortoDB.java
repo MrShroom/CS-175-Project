@@ -2,6 +2,7 @@ package webStuff;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.Set;
 
 import MySQLToBagOfWords.BagOfWordUtilites;
@@ -10,6 +11,8 @@ import textgen.GeneratorNoPOS;
 import textgen.GeneratorPOS;
 
 public class reviewGreneratortoDB {
+	
+	
 
 	public static void main(String[] args) {
 		Connection dBConnects = BagOfWordUtilites.setMySQLDB();
@@ -19,6 +22,13 @@ public class reviewGreneratortoDB {
 
 		for (String currentCat : cats) {
 			for (int i = 1; i <= 5; i++) {
+				Set<String> temp = new HashSet<String>();
+				temp.add(currentCat);
+				Set<Integer> temp2 = new HashSet<Integer>();
+				temp2.add(i);
+				if(BagOfWordUtilites.countSetOfReviews(temp,temp2) < 100)
+					continue;
+				
 				try {
 					myGenerator.setCategory(currentCat);
 					myGenerator.setStar(i);
@@ -48,6 +58,12 @@ public class reviewGreneratortoDB {
 		myGenerator = new GeneratorNoPOS();
 		for (String currentCat : cats) {
 			for (int i = 1; i <= 5; i++) {
+				Set<String> temp = new HashSet<String>();
+				temp.add(currentCat);
+				Set<Integer> temp2 = new HashSet<Integer>();
+				temp.add(currentCat);
+				if(BagOfWordUtilites.countSetOfReviews(temp,temp2) < 100)
+					continue;
 				try {
 					myGenerator.setCategory(currentCat);
 					myGenerator.setStar(i);

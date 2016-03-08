@@ -109,9 +109,9 @@ public class GeneratorPOS extends Generator {
 	
 	private List<String> generateSentence(){
 		List<Integer> posTags;
-		//do{
+		do{
 			posTags = sentenceStructs.GetRandom();
-		//}while(posTags.size()<1 || posTags.size() > 16);
+		}while(posTags.size()<4 || posTags.size() > 16);
 		//changed because of infinite loops.
 		
 		List<Integer> best = new ArrayList<Integer>();

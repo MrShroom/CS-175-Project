@@ -2,6 +2,8 @@ package webStuff;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -9,6 +11,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import MySQLToBagOfWords.BagOfWordUtilites;
 
 /**
  * Servlet implementation class QuestionPage
@@ -59,21 +63,21 @@ public class QuestionPage extends HttpServlet
 		String docType = "<!doctype html public \"-//w3c//dtd html 4.0 transitional//en\">\n";
 		
 		//record last responses
-		if(number > 1 && number <=6)
+		if(number > 1 && number <=4)
 		{
 			myGetter.submittFeedback("DataBaseReviewVsPOSGen",Integer.parseInt(LastAns));
 		}
-		else if(number > 6 && number <=11)
+		else if(number > 4 && number <=7)
 		{
 			myGetter.submittFeedback("DataBaseReviewVsNoPOSGen",Integer.parseInt(LastAns));
 		}
-		else if(number > 11 && number <=16)
+		else if(number > 7 && number <=11)
 		{
 			myGetter.submittFeedback("POSGenVsNoPOSGen",Integer.parseInt(LastAns));
 		}
 		
 		//redirect on last question
-		if(number == 16)
+		if(number == 11)
 		{
 			 response.sendRedirect("EndPage.jsp");  
 		}
@@ -82,19 +86,29 @@ public class QuestionPage extends HttpServlet
 		while (randomReview == null)
 		{
 			myGetter.setRandomCategory();
+			myGetter2.setCurrentCategory(myGetter.getCurrentCategory());
 			myGetter.setRandomStarRating();
+			myGetter2.setStarRatinge(myGetter.getStarRatinge());
+			
+			Set<String> temp = new HashSet<String>();
+			temp.add(myGetter.getCurrentCategory());
+			Set<Integer> temp2 = new HashSet<Integer>();
+			temp2.add(myGetter.getStarRatinge());
+			
+			if(BagOfWordUtilites.countSetOfReviews(temp,temp2) < 100)
+				continue;			
 			randomReview = myGetter.getRandomReviewFromDB();
 		}
 		
-		if(number >= 1 && number < 6)
+		if(number >= 1 && number < 4)
 		{
 			myGetter.usePOS(true);
 		}
-		else if(number >= 6 && number < 11)
+		else if(number >= 4 && number < 7)
 		{
 			myGetter.usePOS(false);
 		}
-		else if(number >= 11 && number <=15)
+		else if(number >= 7 && number <=10)
 		{
 			myGetter2.usePOS(true);
 			myGetter.usePOS(false);
@@ -134,7 +148,7 @@ public class QuestionPage extends HttpServlet
 			"<INPUT type=\"hidden\" NAME=\"questNum\" VALUE=\"" + (number+1) + "\" checked/>" +
 			"<INPUT TYPE=\"submit\" VALUE=\"Submit\">\n" +
 			"</FORM>\n" +	   
-			"<p>" + request.getParameter("reviewChoice") + "</p>"+
+			//"<p>" + request.getParameter("reviewChoice") + "</p>"+
 			"</body></html>");
 		
 	}
