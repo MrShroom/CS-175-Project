@@ -1,11 +1,9 @@
 package textgen.tests;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 
 import MySQLToBagOfWords.BagOfWordUtilites;
@@ -23,7 +21,7 @@ public class ParserTest5 {
 		
 		BagOfObjects<String> sentenceStructs = new BagOfObjects<String>();
 		
-		MarkovChain<String> markov =new MarkovChain<String>();
+//		MarkovChain<String> markov =new MarkovChain<String>();
 		
 		Set<String> categories = new HashSet<String>();
 		categories.add("Restaurants");

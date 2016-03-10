@@ -45,7 +45,7 @@ public class GeneratorPOS extends Generator {
 		int ctr = 0;
 		int num = 0;
 		for (String review : listOfReview) {
-			if ((++ctr) % (listOfReview.size() / 100) == 0) {
+			if (listOfReview.size() >= 100 && (++ctr) % (listOfReview.size() / 100) == 0) {
 				System.out.println(++num + "% ");
 				System.out.println("MB Used: " + Runtime.getRuntime().totalMemory() / 1000000);
 			}
@@ -119,7 +119,8 @@ public class GeneratorPOS extends Generator {
 		List<Integer> posTags;
 		do{
 			posTags = sentenceStructs.GetRandom();
-		}while(posTags.size()<6 || posTags.size() > 16);
+		}while(posTags.size()<4 || posTags.size() > 16);
+		//changed because of infinite loops.
 		
 		List<Integer> best = new ArrayList<Integer>();
 		int highscore = 0;

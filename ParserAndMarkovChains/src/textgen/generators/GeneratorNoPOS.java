@@ -43,7 +43,7 @@ public class GeneratorNoPOS extends Generator {
 		int ctr = 0;
 		int num = 0;
 		for (String review : listOfReview) {
-			if ((++ctr) % (listOfReview.size() / 100) == 0) {
+			if (listOfReview.size() >= 100 && (++ctr) % (listOfReview.size() / 100) == 0) {
 				System.out.println(++num + "% ");
 				System.out.println("MB Used: " + Runtime.getRuntime().totalMemory() / 1000000);
 			}
