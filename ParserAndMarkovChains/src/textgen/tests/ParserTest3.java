@@ -1,4 +1,4 @@
-package textgen;
+package textgen.tests;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +8,9 @@ import java.util.Set;
 
 import MySQLToBagOfWords.BagOfWordUtilites;
 import edu.stanford.nlp.ling.TaggedWord;
+import textgen.NgramUtil;
+import textgen.ParserUtil;
+import textgen.datastructs.MarkovChain;
 
 public class ParserTest3 {
 
@@ -30,7 +33,7 @@ public class ParserTest3 {
 		Set<String> categories = new HashSet<String>();
 		categories.add("Restaurants");
 		Set<Integer> stars = new HashSet<Integer>();
-		stars.add(1);
+		stars.add(5);
 		Set<String> listOfReview = BagOfWordUtilites.getSetOfReviews(categories, stars, 2000);
 		
 		for(String review : listOfReview)

@@ -1,20 +1,20 @@
-package textgen;
+package textgen.datastructs;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import java.util.TreeMap;
 
-public class BagOfObjects<T> {
+public class BagOfObjects_NoComp<T> {
 	
 	static Random rand = new Random();
 	int total = 0;
-	TreeMap<T,Integer> map = new TreeMap<T,Integer>();
+	HashMap<T,Integer> map = new HashMap<T,Integer>();
 	
-	public BagOfObjects(){
+	public BagOfObjects_NoComp(){
 		
 	}
 	
-	public BagOfObjects(T s){
+	public BagOfObjects_NoComp(T s){
 		Add(s);
 	}
 	

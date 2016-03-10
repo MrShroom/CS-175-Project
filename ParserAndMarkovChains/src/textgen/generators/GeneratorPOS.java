@@ -1,15 +1,22 @@
-package textgen;
+package textgen.generators;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.regex.Pattern;
 
 import MySQLToBagOfWords.BagOfWordUtilites;
 import edu.stanford.nlp.ling.TaggedWord;
 import edu.stanford.nlp.util.Pair;
+import textgen.MemorySafeUtil;
+import textgen.ParserUtil;
+import textgen.Wordtab;
+import textgen.datastructs.BagOfObjects;
+import textgen.datastructs.BagOfObjects_NoComp;
+import textgen.datastructs.MarkovChainPOS;
 
 public class GeneratorPOS extends Generator {
 
@@ -69,7 +76,7 @@ public class GeneratorPOS extends Generator {
 		return this;
 	}
 	
-	
+	public Random rand = new Random();
 	public String generateReview(){
 		if(!trained)
 			return "Error: Generator is not trained.";
@@ -77,7 +84,8 @@ public class GeneratorPOS extends Generator {
 		StringBuilder builder = new StringBuilder();
 		
 		List<String> words = new ArrayList<String>();
-		for(int i = 0; i < 6; ++i){
+		int n = 3+rand.nextInt(5);
+		for(int i = 0; i < n; ++i){
 			words.addAll(generateSentence());
 		}
 		

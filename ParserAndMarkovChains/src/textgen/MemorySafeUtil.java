@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import edu.stanford.nlp.ling.TaggedWord;
+import textgen.datastructs.BagOfObjects;
+import textgen.datastructs.MarkovChainKT;
+import textgen.datastructs.MarkovChainPOS;
 
 public class MemorySafeUtil {
 

@@ -1,4 +1,4 @@
-package textgen;
+package textgen.tests;
 
 
 import java.io.File;
@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+
+import textgen.datastructs.BagOfObjects;
 
 public class ParserTest2 {
 	

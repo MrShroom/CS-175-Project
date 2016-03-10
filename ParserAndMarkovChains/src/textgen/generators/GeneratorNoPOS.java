@@ -1,4 +1,4 @@
-package textgen;
+package textgen.generators;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,6 +10,11 @@ import java.util.regex.Pattern;
 import MySQLToBagOfWords.BagOfWordUtilites;
 import edu.stanford.nlp.ling.TaggedWord;
 import edu.stanford.nlp.util.Pair;
+import textgen.MemorySafeUtil;
+import textgen.ParserUtil;
+import textgen.Wordtab;
+import textgen.datastructs.BagOfObjects;
+import textgen.datastructs.MarkovChainKT;
 
 public class GeneratorNoPOS extends Generator {
 
@@ -70,7 +75,8 @@ public class GeneratorNoPOS extends Generator {
 		StringBuilder builder = new StringBuilder();
 		
 		List<String> words = new ArrayList<String>();
-		for(int i = 0; i < 6; ++i){
+		int n = 3+rand.nextInt(5);
+		for(int i = 0; i < n; ++i){
 			words.addAll(generateSentence());
 		}
 		

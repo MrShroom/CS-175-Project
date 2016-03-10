@@ -1,4 +1,4 @@
-package textgen;
+package textgen.tests;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -9,6 +9,9 @@ import java.util.Scanner;
 import java.util.Set;
 
 import MySQLToBagOfWords.BagOfWordUtilites;
+import textgen.NgramUtil;
+import textgen.datastructs.BagOfObjects;
+import textgen.datastructs.MarkovChain;
 
 public class ParserTest4 {
 	public static final int NSIZE = 4;
@@ -29,10 +32,10 @@ public class ParserTest4 {
 		tokenCountBOW = new BagOfObjects<String>();
 		
 		Set<String> categories = new HashSet<String>();
-		categories.add("Burgers");
+		categories.add("Restaurants");
 		Set<Integer> stars = new HashSet<Integer>();
-		stars.add(1);
-		Set<String> listOfReview = BagOfWordUtilites.getSetOfReviews(categories, stars, 1000);
+		stars.add(5);
+		Set<String> listOfReview = BagOfWordUtilites.getSetOfReviews(categories, stars, 5000);
 		
 		
 		
@@ -51,23 +54,24 @@ public class ParserTest4 {
 		}
 		listOfReview = null;
 		
-		try{
-			List<String> tokens = new ArrayList<String>();
-			Scanner sc = new Scanner(new File("res/hemingway"));
-			while(sc.hasNextLine()){
-				for(String token : sc.nextLine().toLowerCase().split("[^a-zA-Z0-9\\.,;\\?!']")){
-					if(token.length()>0)
-						tokens.add(token);
-				}	
-			}
-			sc.close();
-			for(int i = 1; i <= NSIZE; ++i){
-				//NgramUtil.teachStringMarkovNgram(markov, tokens, i);
-				//NgramUtil.teachTokenCountBOW(tokenCountBOW, tokens, i);
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		
+//		try{
+//			List<String> tokens = new ArrayList<String>();
+//			Scanner sc = new Scanner(new File("res/hemingway"));
+//			while(sc.hasNextLine()){
+//				for(String token : sc.nextLine().toLowerCase().split("[^a-zA-Z0-9\\.,;\\?!']")){
+//					if(token.length()>0)
+//						tokens.add(token);
+//				}	
+//			}
+//			sc.close();
+//			for(int i = 1; i <= NSIZE; ++i){
+//				//NgramUtil.teachStringMarkovNgram(markov, tokens, i);
+//				//NgramUtil.teachTokenCountBOW(tokenCountBOW, tokens, i);
+//			}
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
 		
 		
 		List<String> words = new ArrayList<String>();
@@ -91,7 +95,7 @@ public class ParserTest4 {
 //				words.add(startBOW.GetRandom());
 //		}
 		
-		for(int i = 0; i < 600; ++i){
+		for(int i = 0; i < 100; ++i){
 			String w = calculateNextWord(words);
 			words.add(w);
 		}

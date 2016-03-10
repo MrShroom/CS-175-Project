@@ -1,4 +1,4 @@
-package textgen;
+package textgen.generators;
 
 public abstract class Generator {
 

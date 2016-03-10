@@ -1,4 +1,4 @@
-package textgen;
+package textgen.tests;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +10,11 @@ import java.util.regex.Pattern;
 import MySQLToBagOfWords.BagOfWordUtilites;
 import edu.stanford.nlp.ling.TaggedWord;
 import edu.stanford.nlp.util.Pair;
+import textgen.MemorySafeUtil;
+import textgen.ParserUtil;
+import textgen.Wordtab;
+import textgen.datastructs.BagOfObjects;
+import textgen.datastructs.MarkovChainKT;
 
 public class ParserTest8 {
 	

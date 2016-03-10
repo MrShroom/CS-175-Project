@@ -1,4 +1,4 @@
-package textgen;
+package textgen.datastructs;
 
 import java.util.HashMap;
 
