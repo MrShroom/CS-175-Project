@@ -4,7 +4,7 @@
 <body bgcolor="#f0f0f0">
 <h1 align="center">Evaluation Pages</h1>
 <fieldset>
-<legend>Welcome</legend>
+<legend>Thank you</legend>
 <p>Thank you for taking the time to help evaluate our reviews. If you'd like to submit more responses please feel free.
 </fieldset>
 

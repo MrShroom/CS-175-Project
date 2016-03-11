@@ -6,13 +6,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Random;
 import MySQLToBagOfWords.BagOfWordUtilites;
-import textgen.Generator;
-import textgen.GeneratorNoPOS;
-import textgen.GeneratorPOS;
+import textgen.generators.*;
+
 
 public class ReviewGetter 
 {
-	private Generator myGenerator = new GeneratorPOS();
+	private Generator myGenerator = new GeneratorPOS2();
 	private String currentCategory = "Restaurants";
 	private int starRating = 1;
 	private boolean usePOS = true;
@@ -23,7 +22,7 @@ public class ReviewGetter
 		if(usePos)
 		{
 			usePOS = true;
-			myGenerator = new GeneratorPOS();
+			myGenerator = new GeneratorPOS2();
 		}
 		else
 		{

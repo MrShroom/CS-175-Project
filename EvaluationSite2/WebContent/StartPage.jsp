@@ -6,8 +6,10 @@
 <fieldset>
 <legend>Welcome</legend>
 <p>Thank you for taking the time to help evaluate our reviews. In the next pages, you will be shown a series 
-of reviews. There are two on each page. Some of these reviews are real reviews taken from Yelp's data set,
+of reviews. There are two on each page.There are 10 pages. Some of these reviews are real reviews taken from Yelp's data set,
  some of these have been computer generated. On each page please select the review that is or seems more likely to have been <b>Human generated</b>. Please click start to began.</p>
+ 
+<p>Okay I think I fixed the server issues.</p> 
 </fieldset>
 
 <FORM ACTION="QuestionPage" METHOD="post">
