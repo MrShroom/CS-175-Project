@@ -1,12 +1,12 @@
-package textgen;
+package textgen.depreciatedcode;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
 import edu.stanford.nlp.ling.TaggedWord;
+import textgen.MemorySafeUtil;
 import textgen.datastructs.BagOfObjects;
-import textgen.datastructs.MarkovChain;
 
 /**
  * @depreciated

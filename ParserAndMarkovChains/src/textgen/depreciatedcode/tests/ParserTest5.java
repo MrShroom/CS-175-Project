@@ -1,4 +1,4 @@
-package textgen.tests;
+package textgen.depreciatedcode.tests;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,10 +8,10 @@ import java.util.Set;
 
 import MySQLToBagOfWords.BagOfWordUtilites;
 import edu.stanford.nlp.ling.TaggedWord;
-import textgen.NgramUtil;
 import textgen.ParserUtil;
 import textgen.datastructs.BagOfObjects;
-import textgen.datastructs.MarkovChain;
+import textgen.depreciatedcode.MarkovChain;
+import textgen.depreciatedcode.NgramUtil;
 
 public class ParserTest5 {
 	

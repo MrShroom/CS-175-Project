@@ -1,4 +1,4 @@
-package textgen.tests;
+package textgen.depreciatedcode.tests;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -7,9 +7,9 @@ import java.util.Random;
 import java.util.Set;
 
 import MySQLToBagOfWords.BagOfWordUtilites;
-import textgen.NgramUtil;
 import textgen.datastructs.BagOfObjects;
-import textgen.datastructs.MarkovChain;
+import textgen.depreciatedcode.MarkovChain;
+import textgen.depreciatedcode.NgramUtil;
 
 public class ParserTest4 {
 	public static final int NSIZE = 4;

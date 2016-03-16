@@ -6,16 +6,14 @@ import java.util.List;
 
 import edu.stanford.nlp.ling.TaggedWord;
 import textgen.datastructs.BagOfObjects;
-import textgen.datastructs.MarkovChainKT;
 import textgen.datastructs.MarkovChainPOS;
+import textgen.depreciatedcode.MarkovChainKT;
 
 /**
  * Module of functions for converting sentences into lists of term-ids,
- * and training MarkovChains
+ * and training MarkovChains to remember successors of ngram/target-pos pairs
+ * Is an updated version of ngramUtil which uses term-ids to save memory
  *
- */
-/**
- * @author Gunmaze
  *
  */
 public class MemorySafeUtil {

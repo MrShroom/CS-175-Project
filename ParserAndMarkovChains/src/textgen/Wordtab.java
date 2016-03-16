@@ -3,7 +3,7 @@ package textgen;
 import java.util.HashMap;
 
 /**
- * Module that maps words to integer ids.
+ * Module that maps words to integer ids, and vice versa
  *
  */
 public class Wordtab {

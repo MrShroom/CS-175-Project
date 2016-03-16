@@ -12,9 +12,7 @@ import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
 
 /**
- * Swing GUI used for convinienct testing.
- * 
- *
+ * Swing GUI used for convinient testing.
  */
 public class GeneratorGUI extends JFrame {
 	/**

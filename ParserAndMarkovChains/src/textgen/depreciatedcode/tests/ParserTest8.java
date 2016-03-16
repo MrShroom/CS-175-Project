@@ -1,4 +1,4 @@
-package textgen.tests;
+package textgen.depreciatedcode.tests;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +14,7 @@ import textgen.MemorySafeUtil;
 import textgen.ParserUtil;
 import textgen.Wordtab;
 import textgen.datastructs.BagOfObjects;
-import textgen.datastructs.MarkovChainKT;
+import textgen.depreciatedcode.MarkovChainKT;
 
 public class ParserTest8 {
 	

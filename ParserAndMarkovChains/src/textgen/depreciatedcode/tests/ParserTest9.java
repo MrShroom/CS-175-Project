@@ -1,4 +1,4 @@
-package textgen.tests;
+package textgen.depreciatedcode.tests;
 
 import java.util.ArrayList;
 import java.util.HashMap;

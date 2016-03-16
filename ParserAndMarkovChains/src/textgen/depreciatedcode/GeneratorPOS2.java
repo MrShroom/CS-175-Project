@@ -1,4 +1,4 @@
-package textgen.generators;
+package textgen.depreciatedcode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +17,7 @@ import textgen.Wordtab;
 import textgen.datastructs.BagOfObjects;
 import textgen.datastructs.BagOfObjects_NoComp;
 import textgen.datastructs.MarkovChainPOS;
+import textgen.generators.Generator;
 
 public class GeneratorPOS2 extends Generator {
 
