@@ -10,9 +10,11 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
- * Swing GUI used for convinient testing.
+ * Swing GUI used for convenient testing.
  */
 public class GeneratorGUI extends JFrame {
 	/**
@@ -30,6 +32,9 @@ public class GeneratorGUI extends JFrame {
 	JSpinner starSpinner;
 
 	JPanel panel;
+	
+	
+	JTextArea reviewCategoryArea;
 
 	public static void main(String[] args) {
 		// GeneratorGUI gui = new GeneratorGUI();
@@ -53,15 +58,17 @@ public class GeneratorGUI extends JFrame {
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = 4;
+		//c.gridheight = 4;
 		// c.ipady = 300;
-		reviewBox = new JTextArea("Wow dude that's crazy");
+		reviewBox = new JTextArea(1,50);
 		reviewBox.setLineWrap(true);
-		reviewBox.setSize(300, 300);
+		reviewBox.setSize(500, 600);
 		// reviewBox.set
 		panel.add(reviewBox, c);
 
 		c.ipady = 0;
 		c.gridwidth = 1;
+		c.gridheight = 1;
 		c.gridx = 0;
 		c.gridy = 1;
 		trainButton = new JButton("Train");
@@ -113,10 +120,41 @@ public class GeneratorGUI extends JFrame {
 		panel.add(sizeSpinner,c);
 		
 		
+		c.gridx = 2;
+		c.gridy = 3;
+		JLabel categoryLabel = new JLabel("Category:");
+		panel.add(categoryLabel,c);
+		
+		c.gridx = 3;
+		c.gridy = 3;
+		reviewCategoryArea = new JTextArea("Restaurants");
+		reviewCategoryArea.getDocument().addDocumentListener(new DocumentListener() {
+
+	        @Override
+	        public void removeUpdate(DocumentEvent e) {
+
+	        }
+
+	        @Override
+	        public void insertUpdate(DocumentEvent e) {
+
+	        }
+
+	        @Override
+	        public void changedUpdate(DocumentEvent arg0) {
+	        	generator.category = reviewCategoryArea.getText();
+	        }
+	        
+	    });
+		panel.add(reviewCategoryArea,c);
+
+
+		
 
 		this.add(panel);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();
+		this.setSize(500, 400);
 		this.setVisible(true);
 	}
 
