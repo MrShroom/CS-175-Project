@@ -11,6 +11,11 @@ import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
 
+/**
+ * Swing GUI used for convinienct testing.
+ * 
+ *
+ */
 public class GeneratorGUI extends JFrame {
 	/**
 	 * 
@@ -101,7 +106,7 @@ public class GeneratorGUI extends JFrame {
 		panel.add(sizeLabel,c);
 		
 		c.gridx = 3;
-		SpinnerNumberModel sizeModel = new SpinnerNumberModel(1000,1000,10000,1000);
+		SpinnerNumberModel sizeModel = new SpinnerNumberModel(1000,1000,20000,1000);
 		JSpinner sizeSpinner = new JSpinner(sizeModel);
 		sizeSpinner.addChangeListener(e -> {
 			generator.setReviewCount((int)sizeSpinner.getValue());

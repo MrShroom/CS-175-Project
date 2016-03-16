@@ -3,6 +3,13 @@ package textgen.datastructs;
 import java.util.HashMap;
 
 //Wrapper for hashmap of current words to probability of next words using bagofobjects class.
+
+
+/**
+ * @deprecated
+ *
+ * @param <T>
+ */
 public class MarkovChain<T> {
 	public HashMap<T,BagOfObjects<T>> map = new HashMap<T,BagOfObjects<T>>();
 	

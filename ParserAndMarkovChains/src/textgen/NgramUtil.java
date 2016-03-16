@@ -8,6 +8,15 @@ import edu.stanford.nlp.ling.TaggedWord;
 import textgen.datastructs.BagOfObjects;
 import textgen.datastructs.MarkovChain;
 
+/**
+ * @depreciated
+ *
+ * Provides the same utility as MemorySafeUtil,
+ * except that it uses raw strings instead of integer term-ids
+ * Replaced for memory use reasons
+ * 
+ * @see MemorySafeUtil
+ */
 public class NgramUtil {
 	
 	

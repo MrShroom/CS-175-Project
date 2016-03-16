@@ -4,6 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * Exact same as BagOfObjects, but uses a HashMap instead of a TreeMap
+ *
+ * @param <T>
+ * Object being counted. Usually an integer term-id
+ * 
+ * @see BagOfObjects
+ */
 public class BagOfObjects_NoComp<T> {
 	
 	static Random rand = new Random();

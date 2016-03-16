@@ -120,16 +120,30 @@ public class GeneratorPOS2 extends Generator {
 	}
 	
 	private static Random rand = new Random();
+	
+	
+	/**
+	 * Generates a sentence.
+	 * 
+	 * Chooses a
+	 * 
+	 * 
+	 * @return
+	 */
 	private List<String> generateSentence(){
+		
+		//Choose a learned grammar to match.
+		//Hard coded bounds on sentence size.
+		//Sentences generated within these bounds look better from personal experimentation.
 		List<Integer> posTags;
 		do{
 			posTags = sentenceStructs.GetRandom();
 		}while(posTags.size()<6 || posTags.size() > 16);
 		
+		
 		List<Integer> best = new ArrayList<Integer>();
-		
-		
 		List<Integer> ngramSizes = new ArrayList<Integer>();
+		
 		int rmax = 0;
 		for(int i = 1 ; i <= ngramSize; ++i)
 			rmax += i;
@@ -157,7 +171,7 @@ public class GeneratorPOS2 extends Generator {
 			List<Integer> temp = new ArrayList<Integer>();
 			for(int j = 0; j < posTags.size(); ++j){
 				int posTarg = posTags.get(j);
-				Pair<Integer,Integer> pair = calculateNextWord3(temp,ngramSizes.get(j),posTarg);
+				Pair<Integer,Integer> pair = calculateNextWord(temp,ngramSizes.get(j),posTarg);
 				score += pair.second();
 				temp.add(pair.first());
 			}
@@ -176,7 +190,26 @@ public class GeneratorPOS2 extends Generator {
 	}
 	
 	//Pair<id,score>
-	private Pair<Integer,Integer> calculateNextWord3(List<Integer> words, int maxn, int posTarg){
+	/**
+	 * Generates a word based on most recent ngram, and target Part of Speech.
+	 * Also provides a score for the word, based on how big of an ngram it matches.
+	 * 
+	 * @param words
+	 * The list of current words in the sentence.
+	 * 
+	 * @param maxn 
+	 * Largest ngram allowed
+	 * A bound on how many words back the method can use.
+	 * This is used to prevent overfitting.
+	 * 
+	 * @param posTarg
+	 * Part of Speech Target
+	 * The function must return a word that belongs to this function.
+	 * 
+	 * @return
+	 * Returns a word-score pair. The score is (NgramSizeUsed+1)*3.
+	 */
+	private Pair<Integer,Integer> calculateNextWord(List<Integer> words, int maxn, int posTarg){
 		Pair<Integer,Integer> pair = new Pair<Integer,Integer>(1,1);
 		
 		if(words.isEmpty()){
