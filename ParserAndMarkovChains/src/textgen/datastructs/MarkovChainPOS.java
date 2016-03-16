@@ -86,4 +86,27 @@ public class MarkovChainPOS<K,P,T> {
 		return map.containsKey(current) && map.get(current).containsKey(pos);
 	}
 	
+	/**
+	 * Returns number of times the particular
+	 * ngram and pos-target have been seen together.
+	 * 
+	 * @param pos
+	 * Part of Speech being targeted
+	 * 
+	 * @param current
+	 * ngram chain is checking
+	 * 
+	 * @return
+	 */
+	public int TimesSeen(P pos, K current){
+		if(!HasNext(pos,current))
+			return 0;
+		
+		int total = 0;
+		for(BagOfObjects<T> counts : map.get(current).values()){
+			total += counts.total;
+		}
+		return total;
+	}
+	
 }
