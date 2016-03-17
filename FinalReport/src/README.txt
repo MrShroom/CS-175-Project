@@ -5,6 +5,8 @@ GeneratorGUI is a folder containing an executable Jar file that implements a sim
 2. Press Train. Wait for text box to say training complete.
 3. Press Generate as many times as you want to generate reviews.
 
+Evaluation page is still up at cs175.shaunmcthomas.me.
+
 In src/GeneratorLibrary/textgen:
 The folder 'depreciatedcode' contians all of the modules, generators, and tests that are not used anywhere in our final project. Most of it is uncommented, and is only there to show the work we've done leading up to our final project.
 
@@ -13,7 +15,6 @@ Is the flagship class that ties all other code together. Train() implements the 
 
 generators/GeneratorGUI:
 Simple swing gui that wraps around a GeneratorPOS.
-
 
 MemorySafeUtil:
 A module that provides utility functions for extracting ngram subsequences from larger word sequences.
@@ -32,3 +33,13 @@ BagOfObjects_NoComp<T> uses a hashmap instead of a treemap.
 
 datastructs/MarkovChainPOS:
 A helper class which maps ngrams/targetPOStags to a list of successor-word counts.
+
+MySQLToBagOfWord(MySQLtoBagOfWordsPython):
+A class initially designed to store review from database to a bag of word object. However because we designed different portions of code in parallel, these class degraded in to just a SQL wrapper
+eel
+
+EvaluationSite2:
+This is all the code use to run the back end of the evaluation site. 
+
+JsonToMysql:
+Code that was used to parse the JSON yelp dataset and store into datbase.

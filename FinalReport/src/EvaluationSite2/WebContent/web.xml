@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<web-app>
+	<servlet>
+		<servlet-name>QuestionPage</servlet-name>
+		<servlet-class>webStuff.QuestionPage</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>QuestionPage</servlet-name>
+		<url-pattern>/QuestionPage</url-pattern>
+	</servlet-mapping>
+</web-app>
