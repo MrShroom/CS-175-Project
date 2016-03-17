@@ -56,15 +56,15 @@ public class QuestionPage extends HttpServlet
 		//record last responses
 		if(number > 1 && number <=4)
 		{
-			myGetter.submittFeedback("DataBaseReviewVsPOSGenV2",Integer.parseInt(LastAns));
+			myGetter.submittFeedback("DataBaseReviewVsPOSGenV3",Integer.parseInt(LastAns));
 		}
 		else if(number > 4 && number <=7)
 		{
-			myGetter.submittFeedback("DataBaseReviewVsNoPOSGenV2",Integer.parseInt(LastAns));
+			myGetter.submittFeedback("DataBaseReviewVsNoPOSGenV3",Integer.parseInt(LastAns));
 		}
 		else if(number > 7 && number <=11)
 		{
-			myGetter.submittFeedback("POSGenVsNoPOSGenV2",Integer.parseInt(LastAns));
+			myGetter.submittFeedback("POSGenVsNoPOSGenV3",Integer.parseInt(LastAns));
 		}
 		
 		//redirect on last question
@@ -117,30 +117,40 @@ public class QuestionPage extends HttpServlet
 				"</fieldset>\n" +
 				"<fieldset>\n" +
 				"<legend><b>Review 2:</b></legend>\n");
-		if(number < 4)
+		if(number < 4 )
 		{
+			out.println("<p>" + reviews.getReviewPOS() + "</p>\n" +
+			"<INPUT TYPE=\"radio\" NAME=\"reviewChoice\" VALUE=\"2\" CHECKED>\n");
+		}
+		else if(number < 7 )
+		{		
 			out.println("<p>" + reviews.getReviewNoPOS() + "</p>\n" +
 			"<INPUT TYPE=\"radio\" NAME=\"reviewChoice\" VALUE=\"2\" CHECKED>\n");
 		}
-		else 
-		{		
-			out.println("<p>" + reviews.getReviewPOS() + "</p>\n" +
-			"<INPUT TYPE=\"radio\" NAME=\"reviewChoice\" VALUE=\"2\" CHECKED>\n");
+		else
+		{
+			out.println("<p>" + reviews.getReviewNoPOS() + "</p>\n" +
+		"<INPUT TYPE=\"radio\" NAME=\"reviewChoice\" VALUE=\"2\" CHECKED>\n");
 		}
 		
 	}
 	
 	public void printReviewTwoFirst(PrintWriter out, int number, ReviewCompariosnClass reviews)
 	{
-		if(number < 4)
+		if(number < 4 )
 		{
+			out.println("<p>" + reviews.getReviewPOS() + "</p>\n" +
+			"<INPUT TYPE=\"radio\" NAME=\"reviewChoice\" VALUE=\"2\" CHECKED>\n");
+		}
+		else if(number < 7 )
+		{		
 			out.println("<p>" + reviews.getReviewNoPOS() + "</p>\n" +
 			"<INPUT TYPE=\"radio\" NAME=\"reviewChoice\" VALUE=\"2\" CHECKED>\n");
 		}
-		else 
-		{		
-			out.println("<p>" + reviews.getReviewPOS() + "</p>\n" +
-			"<INPUT TYPE=\"radio\" NAME=\"reviewChoice\" VALUE=\"2\" CHECKED>\n");
+		else
+		{
+			out.println("<p>" + reviews.getReviewNoPOS() + "</p>\n" +
+		"<INPUT TYPE=\"radio\" NAME=\"reviewChoice\" VALUE=\"2\" CHECKED>\n");
 		}
 		out.print("<b>Review 1</b>\n" +
 				"<BR><BR>\n" +

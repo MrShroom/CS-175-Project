@@ -78,9 +78,30 @@ def getSetOfCatagories(numberOfCategories):
     cnx.close()
     return output
 
-
+def getSetOfCatagoriesWithCounts(numberOfCategories):
+    statement = "SELECT category, count(business_id) AS cnt FROM is_in_catagory Group BY category ORDER BY cnt DESC"
+    if (numberOfCategories > 0):
+        statement = statement + " LIMIT " + str (numberOfCategories)
+    statement += ";"
+    cnxOut = mysql.connector.connect(**config)
+    cursorOut = cnxOut.cursor()
+    cursorOut.execute(statement)
+    output = {}
+    for (category) in cursorOut:
+        statement = "SELECT count(*) as cnt FROM reviews WHERE business_id IN " \
+        + "(SELECT business_id FROM is_in_catagory WHERE is_in_catagory.category=\"" \
+        + str(category[0]) + "\");"
+        cnx = mysql.connector.connect(**config)
+        cursor = cnx.cursor()
+        cursor.execute(statement)
+        for (cnt) in cursor:
+            output[category[0]] = cnt[0]
+        cnx.close()
+    cnxOut.close()
+    return output
 
 if __name__ == "__main__":
     #print (getSetOfCatagories(1))
     #print(getSetOfReviews(getSetOfCatagories(2), {1}, 2))
-    print(getBagOfWords(getSetOfCatagories(3), {1,2,3,4,5}, 5))
+    #print(getBagOfWords(getSetOfCatagories(3), {1,2,3,4,5}, 5))
+    print(getSetOfCatagoriesWithCounts(2))
