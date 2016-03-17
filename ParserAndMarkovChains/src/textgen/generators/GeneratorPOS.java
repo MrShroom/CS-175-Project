@@ -122,6 +122,7 @@ public class GeneratorPOS extends Generator {
 		if(!trained)
 			return "Error: Generator is not trained.";
 		
+		//Use a stringbuilder to generate the full review string.
 		StringBuilder builder = new StringBuilder();
 		
 		
@@ -136,12 +137,11 @@ public class GeneratorPOS extends Generator {
 			words.addAll(generateSentence());
 		}
 		
-		//System.out.println();
 		
+		
+		//Format the review string so that it looks nice.
 		builder.append(words.get(0));
 		for(int i = 1; i < words.size(); ++i){
-			//char c = words.get(i).charAt(0);
-			//if(".?,/".star)
 			if(words.get(i).contains("`")||words.get(i).contains("\"")||words.get(i).contains("\'\'"))
 				continue;
 			if(words.get(i).equals("-LRB-")){
@@ -183,6 +183,9 @@ public class GeneratorPOS extends Generator {
 		}while(posTags.size()<6 || posTags.size() > 16);
 		
 		
+		
+		//Generate several hundred potential sentences.
+		//Choose sentence that satisfied highest number of ngrams.
 		List<Integer> best = new ArrayList<Integer>();
 		int highscore = 0;
 		for(int i = 0; i < 400; ++i){
@@ -239,7 +242,7 @@ public class GeneratorPOS extends Generator {
 		}
 		
 		
-		
+		//Get largest ngram allowed that contains an example of our ngram/posTarg pair.
 		for(int i = Math.min(words.size(),maxn);i>0;--i){
 			List<Integer> ngram = MemorySafeUtil.toNgram(words, i);
 			if(chain.HasNext(posTarg,ngram)){
