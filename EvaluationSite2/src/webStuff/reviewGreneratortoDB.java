@@ -41,7 +41,7 @@ public class reviewGreneratortoDB {
 						myGeneratorNoPOS.setReviewCount(0);
 						myGeneratorNoPOS.setNgramSize(3);
 						myGeneratorNoPOS.train();
-						genReviewNoPOS = myGenerator.generateReview();
+						genReviewNoPOS = myGeneratorNoPOS.generateReview();
 
 						myGetter.setCurrentCategory(currentCat);
 						myGetter.setStarRatinge(i);
